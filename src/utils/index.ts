@@ -97,3 +97,4 @@ export function getRandomFloat(min: number, max: number) {
 export const escapeMarkdown = (text: string) => {
   return text.replace(/[_*[\]()~`>#+-=|{}.!]/g, '\\$&');
 };
+export * from './genPass';

@@ -30,3 +30,7 @@ export enum UserTypes {
   STUDENT = 'student',
   ADMIN = 'admin',
 }
+export enum OrderBy {
+  DESC = 'DESC',
+  ASC = 'ASC',
+}

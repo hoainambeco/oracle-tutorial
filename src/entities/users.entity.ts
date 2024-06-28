@@ -1,9 +1,12 @@
+import * as bcrypt from 'bcrypt';
 import { Gender, UserTypes } from 'src/constants';
 import { StatusAccount } from 'src/constants/status-account';
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { newCode } from 'src/utils';
+import { BeforeInsert, Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { ClassMajorEntity } from './class-major.entity';
 import { DateEntity } from './with-date.entity';
 import { WithId } from './with-id.entity';
+
 @Entity('users')
 export class Users extends WithId(DateEntity) {
   @Column({
@@ -61,4 +64,15 @@ export class Users extends WithId(DateEntity) {
   @ManyToOne(() => ClassMajorEntity)
   @JoinColumn({ name: 'class_major_id' })
   classMajor: ClassMajorEntity;
+
+  @BeforeInsert()
+  async hashPassword() {
+    const salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(this.password, salt);
+  }
+
+  @BeforeInsert()
+  async genCode() {
+    this.code = newCode();
+  }
 }
