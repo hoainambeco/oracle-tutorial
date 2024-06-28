@@ -19,3 +19,14 @@ export const IS_PUBLIC_KEY = 'isPublic';
 export const keyRegex = /([\w]{4,5}[-])?([\w]{4,5}[:])?(?:[\w]{4,5}[-]?){4}/;
 export * from './perm.enum';
 export * from './role.enum';
+
+export enum Gender {
+  MALE = 'male',
+  FEMALE = 'female',
+}
+
+export enum UserTypes {
+  TEACHER = 'teacher',
+  STUDENT = 'student',
+  ADMIN = 'admin',
+}
