@@ -3,19 +3,19 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { UserTypes } from 'src/constants';
 import { PageMetaDto, UserDto, UserQueryDto, UsersPaginated } from 'src/dtos';
+import { CreateUserDto } from 'src/dtos/create-user.dto';
+import { UpdateUserDto, UpdateUserPasswordDto } from 'src/dtos/update-user.dto';
 import { Users } from 'src/entities';
 import { Repository } from 'typeorm';
-import { CreateUserDto } from '../dtos/create-user.dto';
-import { UpdateUserDto, UpdateUserPasswordDto } from '../dtos/update-user.dto';
 
 @Injectable()
-export class StudentService {
+export class TeacherService {
   constructor(
     @InjectRepository(Users)
     private readonly UsersRepository: Repository<Users>,
   ) {}
-  async create(createStudentDto: CreateUserDto) {
-    const user = this.UsersRepository.create(createStudentDto);
+  async create(dto: CreateUserDto) {
+    const user = this.UsersRepository.create(dto);
     const newUser = await this.UsersRepository.save(user);
     return new UserDto(newUser);
   }
@@ -23,7 +23,7 @@ export class StudentService {
   async findAll(q: UserQueryDto) {
     const qb = this.UsersRepository.createQueryBuilder('users');
 
-    qb.where('users.userType = :userType', { userType: UserTypes.STUDENT });
+    qb.where('users.userType = :userType', { userType: UserTypes.TEACHER });
 
     const [data, total] = await qb.getManyAndCount();
     const meta = new PageMetaDto({ options: q, total });
@@ -36,27 +36,27 @@ export class StudentService {
 
   async findOne(id: string) {
     const user = await this.UsersRepository.findOne({
-      where: { id, userType: UserTypes.STUDENT },
+      where: { id, userType: UserTypes.TEACHER },
     });
     return new UserDto(user);
   }
 
-  async update(id: string, updateStudentDto: UpdateUserDto) {
+  async update(id: string, dto: UpdateUserDto) {
     const user = await this.UsersRepository.findOne({
-      where: { id, userType: UserTypes.STUDENT },
+      where: { id, userType: UserTypes.TEACHER },
     });
 
     if (!user) {
       throw new Error('User not found');
     }
-    Object.assign(user, updateStudentDto);
+    Object.assign(user, dto);
     await this.UsersRepository.save(user);
     return new UserDto(user);
   }
 
   async changePassword(id: string, dto: UpdateUserPasswordDto) {
     const user = await this.UsersRepository.findOne({
-      where: { id, userType: UserTypes.STUDENT },
+      where: { id, userType: UserTypes.TEACHER },
     });
 
     if (!user) {

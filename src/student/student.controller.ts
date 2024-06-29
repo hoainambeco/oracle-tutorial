@@ -8,19 +8,20 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserDto, UserQueryDto, UsersPaginated } from 'src/dtos';
-import { CreateStudentDto } from './dto/create-student.dto';
-import { UpdateStudentDto } from './dto/update-student.dto';
+import { CreateUserDto } from '../dtos/create-user.dto';
+import { UpdateUserDto, UpdateUserPasswordDto } from '../dtos/update-user.dto';
 import { StudentService } from './student.service';
 
+@ApiTags('student')
 @Controller('student')
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
 
   @Post()
   @ApiResponse({ type: UserDto })
-  create(@Body() createStudentDto: CreateStudentDto) {
+  create(@Body() createStudentDto: CreateUserDto) {
     return this.studentService.create(createStudentDto);
   }
 
@@ -37,12 +38,22 @@ export class StudentController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStudentDto: UpdateStudentDto) {
-    return this.studentService.update(+id, updateStudentDto);
+  @ApiResponse({ type: UserDto })
+  update(@Param('id') id: string, @Body() updateStudentDto: UpdateUserDto) {
+    return this.studentService.update(id, updateStudentDto);
+  }
+
+  @Patch(':id/change-password')
+  @ApiResponse({ type: UserDto })
+  changePassword(
+    @Param('id') id: string,
+    @Body() updateStudentPasswordDto: UpdateUserPasswordDto,
+  ) {
+    return this.studentService.changePassword(id, updateStudentPasswordDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.studentService.remove(+id);
+    return this.studentService.remove(id);
   }
 }

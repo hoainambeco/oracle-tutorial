@@ -4,6 +4,15 @@ import { Users } from 'src/entities';
 
 export class UserDto {
   @ApiProperty()
+  id: string;
+
+  @ApiProperty()
+  createdAt: Date;
+
+  @ApiProperty()
+  updatedAt: Date;
+
+  @ApiProperty()
   fullName: string;
 
   @ApiProperty()
@@ -25,6 +34,9 @@ export class UserDto {
   status: string;
 
   constructor(user: Users) {
+    this.id = user.id;
+    this.createdAt = user.createdAt;
+    this.updatedAt = user.updatedAt;
     this.fullName = user.fullName;
     this.email = user.email;
     this.code = user.code;

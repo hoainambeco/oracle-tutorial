@@ -19,14 +19,14 @@ export const nanoid09az = customAlphabet(
 export const nanoidaz = customAlphabet('zyxwvutsrqponmlkjihgfedcba', 1);
 export const genUsername = async (size?: number) => {
   if (!size) size = 12;
-  return `${await nanoidaz()}${await nanoid09az(size - 1)}`;
+  return `${nanoidaz()}${nanoid09az(size - 1)}`;
 };
 
 export const genUsernameWithPrefix = async (prefix: string) =>
-  `${prefix}${await nanoid09az(12 - prefix.length)}`;
+  `${prefix}${nanoid09az(12 - prefix.length)}`;
 
-export function truncateDate(date: Date, coeff: number) {
-  return new Date(Math.floor(date.getTime() / coeff) * coeff);
+export function truncateDate(date: Date, coefficient: number) {
+  return new Date(Math.floor(date.getTime() / coefficient) * coefficient);
 }
 
 type Callback = (e: Error, result?: string) => void;
@@ -40,7 +40,6 @@ export function streamToString(
     cb = enc;
     enc = null;
   }
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   cb = cb || (() => {});
   return new Promise<string>(function (resolve, reject) {
     stream.on('data', function (data) {
@@ -57,7 +56,7 @@ export function streamToString(
   });
 }
 
-export function formatCurrency(value) {
+export function formatCurrency(value: number | string) {
   const parts = value.toString().split('.');
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   return parts.join('.');

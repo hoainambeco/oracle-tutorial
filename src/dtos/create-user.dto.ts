@@ -11,7 +11,7 @@ import {
 import { Gender } from 'src/constants';
 import { generatePassword } from 'src/utils';
 
-export class CreateStudentDto {
+export class CreateUserDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
