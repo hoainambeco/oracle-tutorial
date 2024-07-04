@@ -4,6 +4,7 @@ import { DatabaseOptions } from './database';
 import { StudentModule } from './student/student.module';
 import { TeacherModule } from './teacher/teacher.module';
 import { AdminModule } from './admin/admin.module';
+import { ClassMajorModule } from './class-major/class-major.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { AdminModule } from './admin/admin.module';
     StudentModule,
     TeacherModule,
     AdminModule,
+    ClassMajorModule,
   ],
   controllers: [],
   providers: [],
