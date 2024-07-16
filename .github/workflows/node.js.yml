@@ -8,14 +8,15 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: oracle
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: deploy project nodejs
         env:
-          PRIVATE: ${{secrets.PRIVATE}}
-          PUBLIC: ${{vars.PUBLIC}}
+          PRIVATE: ${{ secrets.PRIVATE }}
+          PUBLIC: ${{ vars.PUBLIC }}
         run: |
           echo "Deploying ..."
           echo "PRIVATE: $PRIVATE"
