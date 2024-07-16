@@ -24,6 +24,9 @@ jobs:
           echo "All Done !!!"
 
       - name: Update .env with GitHub environment variable
+        env:
+          PRIVATE: ${{ secrets.PRIVATE }}
+          PUBLIC: ${{ vars.PUBLIC }}
         run: |
           cat .env
           echo "PRIVATE=$PRIVATE" >> .env
