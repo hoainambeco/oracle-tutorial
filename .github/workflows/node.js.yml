@@ -13,13 +13,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: deploy project nodejs
-        # env:
-        #   SERVERID: ${{ vars.SERVERID }}
-        #   PASS: ${{vars.PASS}}
-        #   GIT_PASS: ${{vars.GIT_PASS}}
+        env:
+          PRIVATE: ${{ secrets.PRIVATE }}
+          PUBLIC: ${{vars.PUBLIC}}
         run: |
-          # sudo apt-get install -y openssh-client
-          # sudo apt-get install sshpass
           echo "Deploying ..."
-          # sshpass -p $PASS ssh -o StrictHostKeyChecking=no root@$SERVERID "cd ./saas-backend/ && rm pnpm-lock.yaml && git pull && ./build.sh"
+          echo "PRIVATE: $PRIVATE"
+          echo "PUBLIC: $PUBLIC"
           echo "All Done !!!"
