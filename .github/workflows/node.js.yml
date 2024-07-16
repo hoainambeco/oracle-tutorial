@@ -25,6 +25,6 @@ jobs:
 
       - name: Update .env with GitHub environment variable
         run: |
-          sed -i "s/PUBLIC=.*/PUBLIC=$PUBLIC/g" .env
-          sed -i "s/PRIVATE=.*/PRIVATE=$PRIVATE/g" .env
           cat .env
+          echo "PRIVATE=$PRIVATE" >> .env
+          echo "PUBLIC=$PUBLIC" >> .env
