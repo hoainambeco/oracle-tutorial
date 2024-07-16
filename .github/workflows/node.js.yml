@@ -28,3 +28,4 @@ jobs:
           cat .env
           echo "PRIVATE=$PRIVATE" >> .env
           echo "PUBLIC=$PUBLIC" >> .env
+          cat .env
